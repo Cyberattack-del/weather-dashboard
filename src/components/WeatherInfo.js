@@ -6,19 +6,20 @@ export default function WeatherInfo({ weather, loading }) {
         return <p>No weather data available.</p>;
     }
 
+    const { name, weather: weatherDetails, main } = weather;
+    const { description, icon } = weatherDetails[0];
+
     return (
         <div className="weather-info">
-            <h2>{weather.name}</h2>
-            <p>{weather.weather[0].description}</p>
-            <p>Temperature: {weather.main.temp}°C</p>
-            <p>Humidity: {weather.main.humidity}%</p>
-
-            {/* Weather Icon */}
-            {weather.weather[0].icon && (
+            <h2>{name}</h2>
+            <p>{description}</p>
+            <p>Temperature: {main.temp}°C</p>
+            <p>Humidity: {main.humidity}%</p>
+            {icon && (
                 <img
-                    src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+                    src={`https://openweathermap.org/img/wn/${icon}@2x.png`}
                     alt="Weather Icon"
-                    onError={(e) => (e.target.style.display = "none")} // Hide broken images
+                    onError={(e) => (e.target.style.display = "none")}
                 />
             )}
         </div>
