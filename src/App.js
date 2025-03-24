@@ -15,21 +15,40 @@ function App() {
   const { weather, loading } = useWeather(city);
   const aqi = useAQI(weather?.coord?.lat, weather?.coord?.lon);
 
-
-
   useEffect(() => {
-    fetch("https://api.openweathermap.org/data/2.5/forecast?q=Delhi&appid=YOUR_API_KEY&units=metric")
-      .then((res) => res.json())
-      .then((data) => setForecast(data.list))
-      .catch((err) => console.error("Error fetching forecast:", err));
+    fetch("https://api.openweathermap.org/data/2.5/forecast?q=London&units=metric&appid=YOUR_API_KEY")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("API Response:", data); // Check API response
+  
+        if (data.list) {
+          const formattedForecast = data.list.slice(0, 7).map((item) => ({
+            date: item.dt_txt.split(" ")[0],
+            temp: item.main.temp
+          }));
+          setForecast(formattedForecast); // Update state
+          console.log("forecast", formattedForecast); // Log formatted forecast
+        } else {
+          console.error("No forecast data found in response");
+        }
+      })
+      .catch((error) => console.error("Error fetching forecast:", error));
   }, []);
+
+ 
 
   return (
     <div className="app-container">
-            <h1>Weather Dashboard 2099</h1>
+            <h1>Weather Dashboard</h1>
             <SearchBar onSearch={setCity} />
             <WeatherInfo weather={weather} loading={loading} />
-      {forecast ? <Forecast forecast={forecast} /> : <p>Loading forecast...</p>}
+            {forecast && forecast.length > 0 ? (
+  <Forecast forecast={forecast} />
+) : (
+  <p>Loading forecast...</p>
+)}
+console.log("forecast",forecast);
+
       <AQI aqi={aqi} />
             <WeatherMap />
     </div>

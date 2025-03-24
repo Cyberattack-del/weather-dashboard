@@ -1,7 +1,21 @@
-.weather-map {
-    width: 80%;
-    margin: 20px auto;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-}
+/* Map container to take up the full width and a defined height */
+.map-container {
+    width: 100%;
+    height: 500px; /* Adjust height as needed */
+  }
+  
+  /* Leaflet map should fit its container */
+  .leaflet-map {
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Fix potential tile flickering or gaps */
+  .leaflet-tile {
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+  }
+  
+  .leaflet-container {
+    background-color: transparent; /* Fixes flickering issues */
+  }
